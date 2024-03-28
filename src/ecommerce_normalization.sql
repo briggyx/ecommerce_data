@@ -278,4 +278,5 @@ FROM all_sessions;
 SELECT MAX(date) AS max_date, MIN(date) AS min_date
 FROM analytics;
 
+copy (select * from analytics) to 'C:\ecommerce\analytics_cleaned.csv' delimiter ',' csv header
 
