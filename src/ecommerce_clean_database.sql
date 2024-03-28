@@ -1,5 +1,4 @@
 -- Now, I will clean & transform the tables to prepare them for loading into Snowflake.
--- I will also bring the tables up to 3NF.
 
 /* sales_by_sku 
 ALTER TABLE sales_by_sku
@@ -37,7 +36,11 @@ UPDATE sales_report
 SET 
     name = encode(name::bytea, 'escape'),
     product_sku = encode(product_sku::bytea, 'escape');	
+	
+ALTER TABLE sales_report
+RENAME COLUMN restocking_lead_time TO restocking_lead_time_days;
 */
+
 
 /* products 
 ALTER TABLE products 
@@ -68,6 +71,9 @@ UPDATE products
 SET 
     name = encode(name::bytea, 'escape'),
     product_sku = encode(product_sku::bytea, 'escape');
+	
+ALTER TABLE products 
+RENAME COLUMN restocking_lead_time TO restocking_lead_time_days;
 */
 
 /* all_sessions
@@ -150,7 +156,78 @@ ALTER TABLE all_sessions
 RENAME COLUMN ecommerceaction_option TO ecommerce_action_option;
 
 
+-- In the following, I'm inspecting distinct entries under some fields to check whether the same information is depicted with different spellings or caps.
+SELECT DISTINCT channel_grouping
+FROM all_sessions;
+
+SELECT DISTINCT country
+FROM all_sessions;
+
+SELECT DISTINCT city
+FROM all_sessions;
+
+ALTER TABLE all_sessions 
+RENAME COLUMN time_on_site TO time_on_site_minutes;
+
+ALTER TABLE all_sessions
+ALTER COLUMN date SET DATA TYPE DATE USING TO_DATE(date::text, 'YYYYMMDD');
+
+SELECT DISTINCT type
+FROM all_sessions;
+
+UPDATE all_sessions
+SET product_price = product_price / 1000000;
+
+UPDATE all_sessions
+SET total_transaction_revenue = total_transaction_revenue / 1000000;
 */
+
+/* analytics
+ALTER TABLE analytics 
+RENAME COLUMN visitnumber TO visit_number;
+
+ALTER TABLE analytics 
+RENAME COLUMN visitid TO visit_id;
+
+ALTER TABLE analytics 
+RENAME COLUMN visitstarttime TO visit_start_time;
+
+ALTER TABLE analytics 
+RENAME COLUMN fullvisitorid TO full_visitor_id;
+
+ALTER TABLE analytics 
+RENAME COLUMN userid TO user_id;
+
+ALTER TABLE analytics 
+RENAME COLUMN channelgrouping TO channel_grouping;
+
+ALTER TABLE analytics 
+RENAME COLUMN socialengagementtype TO social_engagement_type;
+
+ALTER TABLE analytics 
+RENAME COLUMN pageviews TO page_views;
+
+ALTER TABLE analytics 
+RENAME COLUMN timeonsite TO time_on_site;
+
+ALTER TABLE analytics
+ALTER COLUMN date SET DATA TYPE DATE USING TO_DATE(date::text, 'YYYYMMDD');
+
+UPDATE analytics
+SET unit_price = unit_price / 1000000;
+
+ALTER TABLE analytics 
+RENAME COLUMN time_on_site TO time_on_site_minutes;
+*/
+
+
+
+
+
+
+
+
+
 
 
 

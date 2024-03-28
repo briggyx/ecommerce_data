@@ -124,6 +124,7 @@ RENAME COLUMN raio TO ratio;
 -- After populating the five tables with the flat-files, I will now validate that the new tables contain accurate information.
 -- I will do this by viewing each table, and visualling inspecting that there are the correct number of rows, field names and data types. 
 -- It appears that capital letters in field names during the creation of the tables aren't applied.
+
 SELECT *
 FROM sales_by_sku;
 
