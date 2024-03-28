@@ -203,25 +203,30 @@ WHERE p.product_sku IS NULL;
 
 DROP TABLE sales_by_sku;
 
+--Drop visit_start_time from analytics table since it repeats visit_id
+ALTER TABLE analytics
+DROP COLUMN visit_start_time;
 
 
 
 
 
 
+-- Both full_visitor_id and visit_id repeat in the table all_sessions
 SELECT full_visitor_id, COUNT(full_visitor_id) repeats
 FROM all_sessions
 GROUP BY full_visitor_id
-HAVING COUNT(full_visitor_id) > 1;
+HAVING COUNT(full_visitor_id) > 1
+ORDER BY repeats DESC;
 
 SELECT visit_id, COUNT(visit_id) repeats
-FROM (all_sessions)
+FROM all_sessions
 GROUP BY visit_id
 HAVING COUNT(visit_id) > 1;
 
 
 
-
+-- Both full_visitor_id and visit_id repeat in the table analytics 
 SELECT full_visitor_id, COUNT(full_visitor_id) repeats
 FROM analytics
 GROUP BY full_visitor_id
@@ -235,11 +240,42 @@ HAVING COUNT(visit_id) > 1;
 SELECT DISTINCT visit_number
 FROM analytics;
 
+-- It seems that each person gets a unique full_visitor_id, and each visit by that person is assigned a visit_id
+-- Every time they add something to their cart/interacts with a product a record is added 
+-- 
 SELECT * 
 FROM analytics 
-WHERE full_visitor_id = '2437975147780812018';
+WHERE full_visitor_id = '7311236652895887059';
 
+SELECT *
+FROM all_sessions
+WHERE visit_id = '1491424686'
 
+SELECT *
+FROM all_sessions
+WHERE full_visitor_id = '2.1338E+18'
 
+-- There are overlapping full_visitor_id between analytics and all_sessions
+-- It appears that analytics and all_sessions are very similar, except that all_sessions contains info about a person's location and duration of browsing and webpage info. 
+
+SELECT an.full_visitor_id
+FROM analytics an  
+INNER JOIN all_sessions als
+ON an.full_visitor_id = als.full_visitor_id;
+
+SELECT an.visit_id, an. full_visitor_id, als.full_visitor_id 
+FROM analytics an  
+INNER JOIN all_sessions als
+ON an.visit_id = als.visit_id
+ORDER BY visit_id;
+
+-- Dates span from "2016-08-01" to "2017-08-01" in all_sessions (1 year)
+SELECT MAX(date) AS max_date, MIN(date) AS min_date
+FROM all_sessions;
+
+-- Dates span from "2017-05-01" to "2017-08-01" in analytics (3 months)
+-- The overlap range is from "2017-05-01" to "2017-08-01" between the two tables 
+SELECT MAX(date) AS max_date, MIN(date) AS min_date
+FROM analytics;
 
 

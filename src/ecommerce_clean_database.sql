@@ -220,6 +220,30 @@ ALTER TABLE analytics
 RENAME COLUMN time_on_site TO time_on_site_minutes;
 */
 
+-- Change NULLs to blank cells so that the CSV can be uploaded to Snowflake 
+UPDATE products
+SET name = ''
+WHERE name IS NULL;
+
+UPDATE products
+SET total_ordered = 0
+WHERE total_ordered IS NULL;
+
+UPDATE products
+SET stock_level = 0
+WHERE stock_level IS NULL;
+
+UPDATE products
+SET restocking_lead_time_days = 0
+WHERE restocking_lead_time_days IS NULL;
+
+UPDATE products
+SET sentiment_score = 0
+WHERE sentiment_score IS NULL;
+
+UPDATE products
+SET sentiment_magnitude = 0
+WHERE sentiment_magnitude IS NULL;
 
 
 
@@ -227,33 +251,200 @@ RENAME COLUMN time_on_site TO time_on_site_minutes;
 
 
 
+select * 
+from all_sessions;
+
+UPDATE all_sessions
+SET channel_grouping = ''
+WHERE channel_grouping IS NULL;
+
+UPDATE all_sessions
+SET time = 0 
+WHERE time IS NULL;
+
+UPDATE all_sessions
+SET country = ''
+WHERE country IS NULL;
+
+UPDATE all_sessions
+SET city = ''
+WHERE city IS NULL;
+
+UPDATE all_sessions
+SET total_transaction_revenue = 0
+WHERE total_transaction_revenue IS NULL;
+
+
+UPDATE all_sessions
+SET transactions = 0
+WHERE transactions IS NULL;
+
+
+UPDATE all_sessions
+SET time_on_site_minutes = 0
+WHERE time_on_site_minutes IS NULL;
+
+
+UPDATE all_sessions
+SET page_views = 0
+WHERE page_views IS NULL;
+
+UPDATE all_sessions
+SET session_quality_dim = 0
+WHERE session_quality_dim IS NULL;
+
+
+UPDATE all_sessions
+SET date = NULL
+WHERE date IS NULL;
+
+
+UPDATE all_sessions
+SET visit_id = 0
+WHERE visit_id IS NULL;
+
+
+UPDATE all_sessions
+SET type = ''
+WHERE type IS NULL;
+
+
+UPDATE all_sessions
+SET product_quantity = 0
+WHERE product_quantity IS NULL;
+
+
+UPDATE all_sessions
+SET product_revenue = 0
+WHERE product_revenue IS NULL;
+
+
+UPDATE all_sessions
+SET product_sku = ''
+WHERE product_sku IS NULL;
+
+
+UPDATE all_sessions
+SET v2_product_category = ''
+WHERE v2_product_category IS NULL;
+
+
+UPDATE all_sessions
+SET product_variant = ''
+WHERE product_variant IS NULL;
+
+
+UPDATE all_sessions
+SET currency_code = ''
+WHERE currency_code IS NULL;
+
+
+UPDATE all_sessions
+SET transaction_revenue = 0
+WHERE transaction_revenue IS NULL;
+
+
+UPDATE all_sessions
+SET transaction_id = ''
+WHERE transaction_id IS NULL;
+
+
+UPDATE all_sessions
+SET page_title = ''
+WHERE page_title IS NULL;
+
+
+UPDATE all_sessions
+SET page_path_level1 = ''
+WHERE page_path_level1 IS NULL;
+
+
+UPDATE all_sessions
+SET ecommerce_action_type = 0
+WHERE ecommerce_action_type IS NULL;
+
+
+UPDATE all_sessions
+SET ecommerce_action_step = 0
+WHERE ecommerce_action_step IS NULL;
+
+
+UPDATE all_sessions
+SET ecommerce_action_option = ''
+WHERE ecommerce_action_option IS NULL;
+
+
+--------------------------------------
+select *
+from analytics
+
+UPDATE analytics
+SET visit_number = 0
+WHERE visit_number IS NULL;
+
+UPDATE analytics
+SET visit_id = 0
+WHERE visit_id IS NULL;
+
+UPDATE analytics
+SET date = NULL
+WHERE date IS NULL;
+
+UPDATE analytics
+SET full_visitor_id = ''
+WHERE full_visitor_id IS NULL;
+
+UPDATE analytics
+SET channel_grouping = ''
+WHERE channel_grouping IS NULL;
+
+UPDATE analytics
+SET social_engagement_type = ''
+WHERE social_engagement_type IS NULL;
+
+UPDATE analytics
+SET units_sold = 0
+WHERE units_sold IS NULL;
+
+UPDATE analytics
+SET page_views = 0
+WHERE page_views IS NULL;
+
+UPDATE analytics
+SET time_on_site_minutes = 0
+WHERE time_on_site_minutes IS NULL;
+
+UPDATE analytics
+SET bounces = 0
+WHERE bounces IS NULL;
+
+UPDATE analytics
+SET revenue = 0
+WHERE revenue IS NULL;
+
+UPDATE analytics
+SET unit_price = 0
+WHERE unit_price IS NULL;
+
+UPDATE analytics
+SET 
+    visit_number = COALESCE(visit_number, 0),
+    visit_id = COALESCE(visit_id, 0),
+    full_visitor_id = COALESCE(full_visitor_id, ''),
+    channel_grouping = COALESCE(channel_grouping, ''),
+    social_engagement_type = COALESCE(social_engagement_type, ''),
+    units_sold = COALESCE(units_sold, 0),
+    page_views = COALESCE(page_views, 0),
+    time_on_site_minutes = COALESCE(time_on_site_minutes, 0),
+    bounces = COALESCE(bounces, 0),
+    revenue = COALESCE(revenue, 0),
+    unit_price = COALESCE(unit_price, 0);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+UPDATE analytics
+SET date = NULL
+WHERE date = CURRENT_DATE;
 
 
 
