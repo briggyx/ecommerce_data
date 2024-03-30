@@ -10,10 +10,10 @@
 
 
 ## Abstract 
-- 
+This project demonstrates ETL proficiency by sourcing data from Google Drive, cleaning and normalizing it with PGAdmin4 and PostgreSQL, and loading it into Snowflake. Analysis in Snowflake yielded insights on revenue, product sales, and geographic distribution.
 
 ## Introduction
-This project demonstrates proficiency in the Extract, Transform, and Load (**ETL**) process. It begins with the retrieval of five .csv files from Google Drive, followed by their transformation in **PGAdmin4** using **PostgreSQL**, and finally, their loading into Snowflake. Within **Snowflake**, these data tables are then queried to address specific questions related to their contents.
+This project begins with the retrieval of five .csv files from Google Drive, followed by their transformation in **PGAdmin4** using **PostgreSQL**, and finally, their loading into Snowflake. Within **Snowflake**, these data tables are then queried to address specific questions related to their contents.
 
 The initial set of tables consists of: products.csv, all_sessions.csv, analytics.csv, sales_by_sku.cv, and sales_report.csv. These tables encompass various details such as location, duration, number of page views, transactions, and information about the products sold or viewed. The data records span a period of one year, from August 1, 2016, to August 1, 2017, and are likely sourced from the Google Store.
 
@@ -249,9 +249,10 @@ Question 5: Can we summarize the impact of revenue generated from each city/coun
 
 **Answer: 92% of total revenues comes from the U.S., 4% comes from Israel and 3% comes from Australia. 11% of total revenues comes from San Francisco, 7% is from Sunnyvale and 6% is from Atlanta.**
 
-## Discussion
 
-## Conclusion 
+
+
+
 
 
 
