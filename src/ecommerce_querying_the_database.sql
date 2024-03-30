@@ -1,4 +1,8 @@
 /* Which cities and countries have the highest level of transaction revenues on the site? */
+/* Answer: Top 5 countries: United States, Israel, Australia, Canada, Switzerland.
+Top 5 cities: San Francisco, Sunnyvale, Atlanta, Palo Alto, Tel Aviv-Yafo.  */
+
+
 
 -- The following queries comes up with 0 results, suggesting there are no overlaps in individuals in analytics and all_sessions
 SELECT a.full_visitor_id
@@ -52,6 +56,7 @@ ORDER BY ttr DESC;
 
 -------------------------------------------------------------------------------------------------------------------------
 /* Question 2: What is the average number of products ordered from visitors in each city and country? */
+/* Answer: Top 2 Countries: Spain (10), United States (4). Top 2 cities: Madrid (10), Salem (8).
 
 -- average of all records for given countries
 SELECT country, round(avg(product_quantity),1) pq
@@ -81,7 +86,7 @@ ORDER BY pq DESC;
 
 -------------------------------------------------------------------------------------------------------------------------
 /* Question 3: Is there any pattern in the types (product categories) of products ordered from visitors in each city and country? */
--- The products are weather-suited to the buyers' countries 
+-- Answer: The products are weather-suited to the buyers' countries 
 
 select * from all_sessions
 
@@ -188,6 +193,15 @@ ORDER BY
     proportion_of_all_revenues DESC, 
     country;
 
-
+SELECT 
+    city, 
+    ROUND(SUM(total_transaction_revenue) / (SELECT SUM(total_transaction_revenue) FROM all_sessions), 2) AS proportion_of_all_revenues
+FROM 
+    all_sessions
+GROUP BY 
+    city
+ORDER BY 
+    proportion_of_all_revenues DESC, 
+    city;
 
 

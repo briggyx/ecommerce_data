@@ -32,10 +32,6 @@ SET name = TRIM(name);
 
 -- The following converts all product_sku and name to UTF8, required by Snowflake. 
 
-UPDATE sales_report
-SET 
-    name = encode(name::bytea, 'escape'),
-    product_sku = encode(product_sku::bytea, 'escape');	
 	
 ALTER TABLE sales_report
 RENAME COLUMN restocking_lead_time TO restocking_lead_time_days;
@@ -67,10 +63,6 @@ set product_sku = TRIM(product_sku);
 UPDATE products 
 set name = TRIM(name);
 
-UPDATE products
-SET 
-    name = encode(name::bytea, 'escape'),
-    product_sku = encode(product_sku::bytea, 'escape');
 	
 ALTER TABLE products 
 RENAME COLUMN restocking_lead_time TO restocking_lead_time_days;
