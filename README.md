@@ -1,6 +1,6 @@
 # Ecommerce ETL & Analysis 
 
-**By Brigitte Yan, May 3, 2024**
+**By Brigitte Yan, April 3, 2024**
 
 **Tech stack & languages: PostgreSQL, Snowflake, pgAdmin 4**
 
